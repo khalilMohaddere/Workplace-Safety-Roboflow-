@@ -6,4 +6,7 @@ Workplace Safety is an AI-powered system designed to monitor working environment
 
 <img width="329" height="240" alt="image" src="https://github.com/user-attachments/assets/09487ee6-acb6-40ce-8d42-4342448c7b78" />
 
+<img width="720" height="447" alt="image" src="https://github.com/user-attachments/assets/4dc68bb1-bc32-4ab1-85ea-f8182b030294" />
+
+
 
