@@ -1,0 +1,52 @@
+!pip install roboflow
+
+from roboflow import Roboflow
+rf = Roboflow(api_key="YPsctnI9JXPe39GiAhX6")
+project = rf.workspace("khalils-workspace-j4arf").project("construction-site-safety-lwcoh")
+version = project.version(1)
+dataset = version.download("yolov5")
+!pip install -U ultralytics
+import os
+
+print("Dataset location:", dataset.location)
+
+for root, dirs, files in os.walk(dataset.location):
+    print(root)
+    print(dirs[:5])
+    print(files[:5])
+from ultralytics import YOLO
+
+# Load pretrained model
+model = YOLO("yolov8n.pt")
+
+# Train
+results = model.train(
+    data=f"/content/Construction-Site-Safety-1/data.yaml",
+    epochs=100,
+    imgsz=640,
+    batch=16,
+
+    patience=20,
+    project="WorkSafety",
+    name="training_v1",
+    save=True,
+    plots=True
+)
+model = YOLO(
+    "WorkSafety/training_v1/weights/best.pt"
+)
+
+results = model.predict(
+    source="/content/test_image.jpg",
+    conf=0.25,
+    save=True
+) 
+results = model.predict(
+    source="/content/workplace.mp4",
+    conf=0.25,
+    save=True
+)
+!pip install tensorboard
+%load_ext tensorboard
+
+%tensorboard --logdir /content/runs/detect/WorkSafety
